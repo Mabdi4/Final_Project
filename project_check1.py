@@ -1,4 +1,5 @@
 """
+Group4 - Price Comparisons
 "Search for retail product API"
 "Implement API into program"
 "Write code that calculates price differences"
@@ -10,6 +11,7 @@ from selenium import webdriver
 
 class walmart_scraper(object): 
     def __init__(self,query,max_price):
+        self.browser = webdriver.Chrome
         self.max_price = max_price
         self.query = query
         self.url = f"https://www.walmart.com/search/?max_price=1000&min_price=&page=1&query=TV&value=till+%243000"
