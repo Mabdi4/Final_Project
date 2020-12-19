@@ -101,7 +101,7 @@ class target_crawler(object):
         
         df = pd.DataFrame({'Product Names': prd_names, 'Brand Names': brand_names, 'Regular Price: ': reg_prices, 'Sale Price: ': sale_prices})
         name = df.values.tolist()
-        df.to_csv('target_tv_dataset111.csv') 
+        df.to_csv('target_tv_dataset.csv') 
         print(name)
             
 crawler = target_crawler()
