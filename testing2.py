@@ -57,7 +57,13 @@ class target_crawler(object):
             elems = driver.find_elements_by_css_selector(".styles__PriceInfoTile-sc-1ip0qfy-1.hqUeIt.h-text-left.h-margin-v-tight [href]")
             names = [elem.get_attribute('innerHTML') for elem in elems]
             
-            names.remove('Check nearby stores')
+            for e in names:
+                if e == 'Check nearby stores':
+                    names.remove(e)
+                elif e == 'See Similar Items':
+                    names.remove(e)
+                else:
+                    continue
             
             n = 0
             for i in names: 
@@ -75,7 +81,7 @@ class target_crawler(object):
             # opens each tv links
             for a in prd_links:
                 url = f'{a}'
-                time.sleep(1)
+                time.sleep(.5)
                 driver.get(url)
             
                 # product sale prices and regular prices
@@ -90,18 +96,13 @@ class target_crawler(object):
             
             num_page += 24
             count += 1
-            
-        print(prd_names)
-        print(brand_names)
-        print(sale_prices)
-        print(reg_prices)
         
-        # casts to csv file
-        #final = pd.DataFrame({'Product Names': prd_names, 'Brand Names': brand_names, 'Regular Price: ': reg_prices, 'Sale Price: ': sale_prices})
-        #name = final['Names'].to_list()
-        #final.to_csv('target_tv_dataset.csv')
- 
         driver.close() 
-         
+        
+        df = pd.DataFrame({'Product Names': prd_names, 'Brand Names': brand_names, 'Regular Price: ': reg_prices, 'Sale Price: ': sale_prices})
+        name = df.values.tolist()
+        df.to_csv('target_tv_dataset111.csv') 
+        print(name)
+            
 crawler = target_crawler()
 crawler.crawler()
