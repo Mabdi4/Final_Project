@@ -11,9 +11,7 @@ from selenium.common.exceptions import NoSuchElementException
 class target_crawler(object):
     """
     A class to represent the crawler bot for Target website.
-
-    ...
-
+    
     Attributes
     ----------
     url : str
@@ -50,10 +48,14 @@ class target_crawler(object):
     def crawler(self, num_page=0):
         """
         Scrapes the necessary data of the items from the website and converts into csv file.
-
         All the data that are scrape from the website are appended to the corresponding lists.
 
         Parameters
+        ----------
+        num_page: int (default=0)
+            page index for url address to search for the items in the next page.
+        
+        Arguments
         ----------
         url : str
             the url address of the website.
@@ -69,12 +71,18 @@ class target_crawler(object):
             list of product regular prices that are converted to integers when appending to the list.
         user_input : str
             number of pages to scrape for the website.
-        num_page: int (default=0)
-            page index for url address to search for the items in the next page.
 
-        Returns
+        Raises
         -------
-        None
+        NoSuchElementException : sets the price value to '0' if no price value is found.
+        
+        Side effects
+        -------
+        Appends product names to the prd_names list.
+        Appends brand names to the brand_names list.
+        Appends sale prices to the sale_prices list.
+        Appends regular prices to the reg_prices list.
+        Creates csv file by using pandas to get dataframe of the prd_names, brand_names, sale_prices, and reg_prices
         """
         url = self.url
         driver = self.driver
