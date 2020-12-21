@@ -1,9 +1,8 @@
-"""
-"Search for retail product API"
-"Implement API into program"
-"Write code that calculates price differences"
-"Create input for users products"
-"""
+'''
+Names: Kyo Lee, Mahad Abdi, Lucas Gordon, Kyle Breitenother
+Date: 12/20/2020
+Assignment: Final Project
+'''
 import pandas as pd
 import time
 from selenium import webdriver
@@ -103,11 +102,18 @@ class target_crawler(object):
         name = df.values.tolist()
         df.to_csv('target_tv_dataset.csv') 
         print(name)
-        tarAverage = sum(sale_prices)/len(sale_prices)
+        
     
         
 
 class bestbuy_crawler(object):
+    '''Class that web scrapes best buy tv bestsellers for their type and price. Creates a csv file with that data.
+    
+    Attributes:
+        url (str): The base url for the bestsellers list.
+        driver (WebDriver): the driver tool used to scrape the site.
+        w (str): the user input for how many pages to scrape.
+    '''
     
     def __init__(self):
         self.url = f'https://www.bestbuy.com/site/promo/tv-deals?cp=1&qp=category_facet%3DTVs~abcat0101000&sp=-bestsellingsort%20skuidsaas'
@@ -115,13 +121,24 @@ class bestbuy_crawler(object):
         self.w = input("Number of pages to scrape bestbuy: ")
     
     def crawler(self):
+        '''Crawls best buy tv product pages and appends the realitive price and type data to its list. Creates a csv file from a dataframe containing price and type information.
+        
+        Raises:
+            NoSuchElementException : if the price or type can't be found it gives a deafault.
+        
+        Side effects:
+            Appends TV prices to tv_price list
+            Appens TV types to tv_type list
+            Creates csv file from the data frame of the tv prices and types
+            
+        '''
+        
         url = self.url
         driver = self.driver
         driver.implicitly_wait(10)
         driver.get(url)
         
         tv_type = []
-        brands = []
         tv_price = []
         
         w = self.w
@@ -187,6 +204,4 @@ if __name__ == "__main__":
     crawler2 = bestbuy_crawler()
     crawler.crawler()
     crawler2.crawler()
-    #if tarAverage > bestAverage:
-        #print("On average you will find the best TV deals right now at target.com")
     
