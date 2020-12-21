@@ -9,14 +9,73 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 
 class target_crawler(object):
+    """
+    A class to represent the crawler bot for Target website.
+
+    ...
+
+    Attributes
+    ----------
+    url : str
+        the url address of the website.
+    driver: 
+        using Google chrome to open the url.
+    user_input : str
+        number of pages to scrape for the website.
+
+    Methods
+    -------
+    crawler(url, driver, prd_names, brand_names, sale_prices, reg_prices, user_input, num_page=0, count=0):
+        scrapes data from the Target website.
+    """
     def __init__(self):
+        """
+        Constructs the necessary attributes to initialize the crawler.
+
+        Parameters
+        ----------
+        url : str
+            the url address of the website.
+        driver: 
+            using Google chrome to open the url.
+        user_input : str
+            number of pages to scrape for the website.
+        """
         self.url = f'https://www.target.com/c/tvs-home-theater-electronics/-/N-5xtdj?Nao=0'
         self.driver = webdriver.Chrome("chromedriver.exe")
         
         # target tv has 3 pages (for future, may make it so it finds the pages length)
-        self.c = input('Number of pages to scrape target: ')
+        self.user_input = input('Number of pages to scrape target: ')
         
-    def crawler(self):
+    def crawler(self, num_page=0):
+        """
+        Scrapes the necessary data of the items from the website and converts into csv file.
+
+        All the data that are scrape from the website are appended to the corresponding lists.
+
+        Parameters
+        ----------
+        url : str
+            the url address of the website.
+        driver: 
+            using Google chrome to open the url.
+        prd_names: str, list
+            list of product names.
+        brand_names: str, list
+            list of brand names.
+        sale_prices: int, list
+            list of product sale prices that are converted to integers when appending to the list.
+        reg_prices: int, list
+            list of product regular prices that are converted to integers when appending to the list.
+        user_input : str
+            number of pages to scrape for the website.
+        num_page: int (default=0)
+            page index for url address to search for the items in the next page.
+
+        Returns
+        -------
+        None
+        """
         url = self.url
         driver = self.driver
         driver.implicitly_wait(10)
@@ -27,10 +86,9 @@ class target_crawler(object):
         sale_prices = []
         reg_prices = []
         
-        c = self.c
-        num_page = 0
-        count = 1
-        last = int(c) * 24 - 1
+        user_input = self.user_input
+
+        last = int(user_input) * 24 - 1
         # opens url and next pages
         while num_page < last + 1:
             url = f'https://www.target.com/c/tvs-home-theater-electronics/-/N-5xtdj?Nao={num_page}'
