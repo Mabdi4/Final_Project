@@ -127,7 +127,7 @@ class bestbuy_crawler(object):
         w = self.w
         num_page = 0
         count = 1
-        last = int(w) * 24 - 1
+        last = int(w) *24 - 1
         while num_page < last + 1:
             url = f"https://www.bestbuy.com/site/promo/tv-deals?cp={num_page}&qp=category_facet%3DTVs~abcat0101000&sp=-bestsellingsort%20skuidsaas"
             driver.implicitly_wait(10)
@@ -157,7 +157,8 @@ class bestbuy_crawler(object):
                 driver.get(url)
                 
                 try:
-                    prices_w = driver.find_element_by_css_selector("#viewport span.true").text
+                    prices_w = driver.find_element_by_xpath(xpath="//div[contains(concat(' ', @class, ' '), ' priceView-hero-price priceView-customer-price ')]//span[1]").text
+                    
                 except NoSuchElementException:
                     prices_w = '0' 
                 tv_price.append(int(prices_w.replace('$', '').replace('.', '').replace(',', '')))
@@ -172,9 +173,9 @@ class bestbuy_crawler(object):
         
         
 if __name__ == "__main__":               
-    #crawler = target_crawler()
+    crawler = target_crawler()
     crawler2 = bestbuy_crawler()
-    #crawler.crawler()
+    crawler.crawler()
     crawler2.crawler()
     #if tarAverage > bestAverage:
         #print("On average you will find the best TV deals right now at target.com")
